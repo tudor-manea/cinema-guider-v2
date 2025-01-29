@@ -23,16 +23,16 @@ public class TmdbMovieController {
 
 
     // TODO: Change this so that it pulls the first x many pages of popular movies
-    @GetMapping("/popular")
-    public TmdbMoviePageDto getPopularMovies(@RequestParam(defaultValue = "1") int page) {
-        logger.info("/tmdb/movies/popular -> getPopularMovies()");
-        return tmdbService.getPopularMovies(page);
-    }
+//    @GetMapping("/popular")
+//    public TmdbMoviePageDto getPopularMovies(@RequestParam(defaultValue = "1") int page) {
+//        logger.info("/tmdb/movies/popular -> getPopularMovies()");
+//        return tmdbService.getPopularMovies(page);
+//    }
 
     @GetMapping("/search")
     public TmdbMoviePageDto searchMovies(@RequestParam String query,
                                          @RequestParam(defaultValue = "1") int page) {
         logger.info("/search -> searchMovies()");
-        return tmdbService.searchMovies(query, page);
+        return tmdbService.searchMovies(query);
     }
 }

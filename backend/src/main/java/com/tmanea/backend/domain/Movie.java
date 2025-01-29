@@ -14,7 +14,7 @@ public class Movie {
     private Long id;
     private String title;
     private String releaseDate; // format "yyyy-MM-dd"
-    private Double rating; // 0.0 (worst) to 10.0 (best)
+    private float rating; // 0.0 (worst) to 10.0 (best)
     private String summary;
     private String posterPath;
     double popularity;
