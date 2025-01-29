@@ -6,8 +6,8 @@ import lombok.Data;
 public class TmdbMovieDto {
     private Long id;
     private String title;
-    private String releaseDate;
-    private Double voteAverage;
+    private String release_date;
+    private float vote_average;
     private String overview;
     private String posterPath;
     double popularity;
