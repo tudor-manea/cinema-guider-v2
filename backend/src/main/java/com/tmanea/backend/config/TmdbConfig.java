@@ -1,9 +1,13 @@
 package com.tmanea.backend.config;
 
-public class TmdbConfig {
-    public String getBaseUrl() {
-    }
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import lombok.Data;
 
-    public String getApiKey() {
-    }
+@Configuration
+@ConfigurationProperties(prefix = "tmdb")
+@Data
+public class TmdbConfig {
+    private String apiKey = "APIKEYGOESHERE";
+    private String baseUrl = "https://api.themoviedb.org/3";
 }
