@@ -25,7 +25,7 @@ public class TmdbMovieService {
     public TmdbMoviePageDto getPopularMovies(int page) {
         String url = UriComponentsBuilder
                 .fromHttpUrl(tmdbConfig.getBaseUrl())
-                .path("movie/popular")
+                .path("/movie/popular")
                 .queryParam("api_key", tmdbConfig.getApiKey())
                 .queryParam("page", page)
                 .build()
