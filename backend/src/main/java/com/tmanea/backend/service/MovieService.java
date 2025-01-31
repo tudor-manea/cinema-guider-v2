@@ -30,6 +30,10 @@ public class MovieService {
         return (List<Movie>) movieRepository.saveAll(movies);
     }
 
+    public Page<Movie> getAllMovies(Pageable pageable) {
+        return movieRepository.findAll(pageable);
+    }
+
     public Optional<Movie> getMovie(Long id) {
         return movieRepository.findById(id);
     }
