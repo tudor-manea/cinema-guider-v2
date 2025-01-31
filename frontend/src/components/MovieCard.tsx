@@ -3,9 +3,14 @@ import '../styles/MovieCard.css';
 
 interface MovieCardProps {
     movie: Movie;
+    onToggleSeen: (id: string) => void;
 }
 
-function MovieCard({ movie }: MovieCardProps) {
+function MovieCard({ movie, onToggleSeen }: MovieCardProps) {
+    const handleToggleSeen = () => {
+        onToggleSeen(movie.id);
+    };
+
     return (
         <div className="movie-card">
             <div className="movie-poster">
@@ -13,8 +18,18 @@ function MovieCard({ movie }: MovieCardProps) {
             </div>
             <div className="movie-info">
                 <h2 className="movie-title">{movie.title}</h2>
-                <div className="score-circle">
-                    <span>{movie.vote_average.toFixed(1)}</span>
+                <div className="movie-details">
+                    <div className="score-circle">
+                        <span>{movie.vote_average.toFixed(1)}</span>
+                    </div>
+                    <label className="seen-checkbox">
+                        <input
+                            type="checkbox"
+                            checked={movie.seen}
+                            onChange={handleToggleSeen}
+                        />
+                        Seen
+                    </label>
                 </div>
             </div>
         </div>
