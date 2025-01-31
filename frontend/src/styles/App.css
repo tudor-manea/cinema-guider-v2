@@ -1,0 +1,15 @@
+.app-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.app-title {
+  text-align: center;
+  color: #ffffff;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
