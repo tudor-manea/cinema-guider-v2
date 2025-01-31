@@ -8,6 +8,7 @@ import com.tmanea.backend.repository.MovieRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.Array;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -28,6 +29,17 @@ public class ActiveMovieService {
         this.scraperService = scraperService;
         this.repository = repository;
         this.mapper = mapper;
+    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    public void scheduledActiveMovieSync() {
+        try {
+            log.info("Starting scheduled active movie sync at midnight");
+            getActiveMovies();
+            log.info("Completed scheduled active movie sync");
+        } catch (IOException e) {
+            log.error("Error during scheduled active movie sync: {}", e.getMessage(), e);
+        }
     }
 
 
