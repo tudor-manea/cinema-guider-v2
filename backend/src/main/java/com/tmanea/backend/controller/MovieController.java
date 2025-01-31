@@ -2,16 +2,14 @@
 package com.tmanea.backend.controller;
 
 import com.tmanea.backend.domain.Movie;
+import com.tmanea.backend.service.ActiveMovieService;
 import com.tmanea.backend.service.MovieService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j // Lombok annotation to generate logger field "log"
@@ -21,10 +19,12 @@ import java.util.List;
 public class MovieController {
 
     private final MovieService movieService;
+    private final ActiveMovieService activeService;
 
     @Autowired
-    public MovieController(MovieService movieService) {
+    public MovieController(MovieService movieService, ActiveMovieService activeService) {
         this.movieService = movieService;
+        this.activeService = activeService;
     }
 
     @PostMapping
@@ -47,13 +47,13 @@ public class MovieController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping
-    public ResponseEntity<Page<Movie>> getAllMovies(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
-        log.debug("getAllMovies({}, {})", page, size);
-        return ResponseEntity.ok(movieService.getAllMovies(PageRequest.of(page, size)));
-    }
+//    @GetMapping
+//    public ResponseEntity<Page<Movie>> getAllMovies(
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "20") int size) {
+//        log.debug("getAllMovies({}, {})", page, size);
+//        return ResponseEntity.ok(movieService.getAllMovies(PageRequest.of(page, size)));
+//    }
 
     @GetMapping("/search")
     public ResponseEntity<List<Movie>> searchMovies(@RequestParam String title) {
@@ -61,17 +61,17 @@ public class MovieController {
         return ResponseEntity.ok(movieService.searchMovies(title));
     }
 
-    @GetMapping("/year/{year}")
-    public ResponseEntity<List<Movie>> getMoviesByYear(@PathVariable String year) {
-        log.debug("getMoviesByYear({})", year);
-        return ResponseEntity.ok(movieService.getMoviesByYear(year));
-    }
-
-    @GetMapping("/rating/{rating}")
-    public ResponseEntity<List<Movie>> getMoviesByMinRating(@PathVariable Double rating) {
-        log.debug("getMoviesByMinRating({})", rating);
-        return ResponseEntity.ok(movieService.getMoviesByMinRating(rating));
-    }
+//    @GetMapping("/year/{year}")
+//    public ResponseEntity<List<Movie>> getMoviesByYear(@PathVariable String year) {
+//        log.debug("getMoviesByYear({})", year);
+//        return ResponseEntity.ok(movieService.getMoviesByYear(year));
+//    }
+//
+//    @GetMapping("/rating/{rating}")
+//    public ResponseEntity<List<Movie>> getMoviesByMinRating(@PathVariable Double rating) {
+//        log.debug("getMoviesByMinRating({})", rating);
+//        return ResponseEntity.ok(movieService.getMoviesByMinRating(rating));
+//    }
 
     @GetMapping("/popular")
     public ResponseEntity<List<Movie>> getTopPopularMovies() {
@@ -87,5 +87,16 @@ public class MovieController {
         }
         movieService.deleteMovie(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/activeSync")
+    public void getActiveMovies() throws IOException {
+        log.debug("getActiveMovies()");
+        activeService.getActiveMovies();
+    }
+
+    @DeleteMapping("/deleteAll")
+    public void deleteAll() {
+        movieService.deleteAll();
     }
 }

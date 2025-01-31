@@ -9,9 +9,9 @@ public class TmdbMovieDto {
     private String release_date;
     private float vote_average;
     private String overview;
-    private String posterPath;
-    double popularity;
-    double voteCount;
-    String originalLanguage;
-    String originalTitle;
+    private String poster_path;
+    private float popularity;
+    private double vote_count;
+    private String original_language;
+    private String original_title;
 }
