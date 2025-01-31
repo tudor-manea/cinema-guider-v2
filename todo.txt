@@ -1,7 +1,6 @@
-
-2. Add some kind of scheduler for the active movie sync
-
-
-3. Fix some db issues... id numbers, not able to delete everything at once rn
 4. Add seen functionality
+- seen column for movies
+- toggle seen... movie service, movie controller
+- figure out how it will work with react
+
 5. Deploy website
