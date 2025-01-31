@@ -34,7 +34,7 @@ public class MovieService {
         return movieRepository.findAll(pageable);
     }
 
-    public Optional<Movie> getMovie(Long id) {
+    public Optional<Movie> getMovie(String id) {
         return movieRepository.findById(id);
     }
 
@@ -55,15 +55,23 @@ public class MovieService {
         return movieRepository.findTop10ByOrderByPopularityDesc();
     }
 
-    public void deleteMovie(Long id) {
+    public void deleteMovie(String id) {
         movieRepository.deleteById(id);
     }
 
+    @Transactional
     public void deleteAll() {
-        movieRepository.deleteAll();
+        movieRepository.deleteAllInBatch();
     }
 
-    public boolean exists(Long id) {
+    public Movie toggleSeen(String id) {
+        Movie movie = movieRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Movie not found"));
+        movie.setSeen(!movie.isSeen());
+        return movieRepository.save(movie);
+    }
+
+    public boolean exists(String id) {
         return movieRepository.existsById(id);
     }
 

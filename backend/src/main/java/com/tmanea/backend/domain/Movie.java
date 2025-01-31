@@ -10,8 +10,8 @@ import jakarta.persistence.Entity;
 @Data
 public class Movie {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     private String title;
     private String release_date;
     private float vote_average;
@@ -21,4 +21,5 @@ public class Movie {
     private double vote_count;
     private String original_language;
     private String original_title;
+    private boolean seen = false;
 }

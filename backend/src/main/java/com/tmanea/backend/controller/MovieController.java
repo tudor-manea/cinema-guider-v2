@@ -51,7 +51,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Movie> getMovie(@PathVariable Long id) {
+    public ResponseEntity<Movie> getMovie(@PathVariable String id) {
         log.debug("getMovie({})", id);
         return movieService.getMovie(id)
                 .map(ResponseEntity::ok)
@@ -83,7 +83,7 @@ public class MovieController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMovie(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMovie(@PathVariable String id) {
         log.debug("deleteMovie({})", id);
         if (!movieService.exists(id)) {
             return ResponseEntity.notFound().build();
@@ -99,7 +99,17 @@ public class MovieController {
     }
 
     @DeleteMapping("/deleteAll")
-    public void deleteAll() {
+    public ResponseEntity<Void> deleteAll() {
         movieService.deleteAll();
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}/seen")
+    public ResponseEntity<Movie> toggleSeen(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(movieService.toggleSeen(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
