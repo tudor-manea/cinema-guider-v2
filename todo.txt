@@ -1,0 +1,7 @@
+
+2. Add some kind of scheduler for the active movie sync
+
+
+3. Fix some db issues... id numbers, not able to delete everything at once rn
+4. Add seen functionality
+5. Deploy website

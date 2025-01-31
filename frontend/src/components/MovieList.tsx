@@ -16,13 +16,10 @@ function MovieList() {
     }, []);
 
     return (
-        <div className="movie-list-container">
-            <h1>Cinema Guider</h1>
-            <div className="movies">
-                {movies.map(movie => (
-                    <MovieCard key={movie.id} movie={movie} />
-                ))}
-            </div>
+        <div className="movies">
+            {movies.map(movie => (
+                <MovieCard key={movie.id} movie={movie} />
+            ))}
         </div>
     );
 }
