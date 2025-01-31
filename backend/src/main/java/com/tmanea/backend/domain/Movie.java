@@ -13,12 +13,12 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String releaseDate; // format "yyyy-MM-dd"
-    private float rating; // 0.0 (worst) to 10.0 (best)
-    private String summary;
-    private String posterPath;
-    double popularity;
-    double voteCount;
-    String originalLanguage;
-    String originalTitle;
+    private String release_date;
+    private float vote_average;
+    private String overview;
+    private String poster_path;
+    private float popularity;
+    private double vote_count;
+    private String original_language;
+    private String original_title;
 }
