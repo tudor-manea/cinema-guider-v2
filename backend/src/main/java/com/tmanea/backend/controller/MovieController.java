@@ -6,6 +6,8 @@ import com.tmanea.backend.service.ActiveMovieService;
 import com.tmanea.backend.service.MovieService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +29,14 @@ public class MovieController {
         this.activeService = activeService;
     }
 
+    @GetMapping
+    public ResponseEntity<Page<Movie>> getAllMovies(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        log.debug("getAllMovies({}, {})", page, size);
+        return ResponseEntity.ok(movieService.getAllMovies(PageRequest.of(page, size)));
+    }
+
     @PostMapping
     public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
         log.debug("createMovie({})", movie);
@@ -46,14 +56,6 @@ public class MovieController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
-//    @GetMapping
-//    public ResponseEntity<Page<Movie>> getAllMovies(
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "20") int size) {
-//        log.debug("getAllMovies({}, {})", page, size);
-//        return ResponseEntity.ok(movieService.getAllMovies(PageRequest.of(page, size)));
-//    }
 
     @GetMapping("/search")
     public ResponseEntity<List<Movie>> searchMovies(@RequestParam String title) {
