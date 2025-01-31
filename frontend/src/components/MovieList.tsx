@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Movie } from '../types/movie';
-import './MovieList.css';
+import MovieCard from './MovieCard';
+import '../styles/MovieList.css';
 
 function MovieList() {
     const [movies, setMovies] = useState<Movie[]>([]);
@@ -16,16 +17,10 @@ function MovieList() {
 
     return (
         <div className="movie-list-container">
-            <h1>Movies</h1>
+            <h1>Cinema Guider</h1>
             <div className="movies">
                 {movies.map(movie => (
-                    <div key={movie.id} className="movie-item">
-                        <img src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}  alt={movie.title} className="movie-poster" />
-                        <div className="movie-details">
-                            <strong>{movie.title}</strong>
-                            <p>Score: {movie.vote_average}</p>
-                        </div>
-                    </div>
+                    <MovieCard key={movie.id} movie={movie} />
                 ))}
             </div>
         </div>

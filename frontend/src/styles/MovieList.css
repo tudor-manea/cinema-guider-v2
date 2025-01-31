@@ -1,0 +1,22 @@
+.movie-list-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.movies {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
