@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Movie } from '../types/movie';
+import './MovieList.css';
 
 function MovieList() {
-    const[movies, setMovies] = useState<Movie[]>([]);
+    const [movies, setMovies] = useState<Movie[]>([]);
 
     useEffect(() => {
         fetch('http://localhost:8080/movies')
@@ -14,9 +15,19 @@ function MovieList() {
     }, []);
 
     return (
-        <div>
+        <div className="movie-list-container">
             <h1>Movies</h1>
-            <pre>{JSON.stringify(movies, null, 2)}</pre>
+            <div className="movies">
+                {movies.map(movie => (
+                    <div key={movie.id} className="movie-item">
+                        <img src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}  alt={movie.title} className="movie-poster" />
+                        <div className="movie-details">
+                            <strong>{movie.title}</strong>
+                            <p>Score: {movie.vote_average}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
