@@ -71,7 +71,7 @@ public class ActiveMovieService {
             boolean stillActive = scrapedMovies.stream()
                     .anyMatch(scraped -> scraped.getTitle().equalsIgnoreCase(movie.getTitle()));
 
-            if (!stillActive) {
+            if (!stillActive && !movie.isSeen()) {
                 repository.deleteById(movie.getId());
                 log.info("MOVIE DELETED FROM DB WITH TITLE {}", movie.getTitle());
             }

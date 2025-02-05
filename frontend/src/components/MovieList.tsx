@@ -3,7 +3,11 @@ import { Movie } from '../types/movie';
 import MovieCard from './MovieCard';
 import '../styles/MovieList.css';
 
-function MovieList() {
+interface MovieListProps {
+    showSeen: boolean;
+}
+
+function MovieList({ showSeen }: MovieListProps) {
     const [movies, setMovies] = useState<Movie[]>([]);
 
     useEffect(() => {
@@ -11,7 +15,6 @@ function MovieList() {
     }, []);
 
     const fetchMovies = () => {
-        console.log('get movies');
         fetch('http://localhost:8080/movies')
             .then(response => response.json())
             .then(data => {
@@ -33,15 +36,27 @@ function MovieList() {
             .catch(error => console.error('Error toggling seen status', error));
     };
 
+    const filteredMovies = movies.filter(movie => movie.seen === showSeen);
+
     return (
-        <div className="movies">
-            {movies.map(movie => (
-                <MovieCard 
-                    key={movie.id} 
-                    movie={movie} 
-                    onToggleSeen={handleToggleSeen}
-                />
-            ))}
+        <div className="movies-container">
+            <h2 className="view-title">{showSeen ? 'Seen Movies' : 'Current Movies'}</h2>
+            <div className="movies">
+                {filteredMovies.map(movie => (
+                    <MovieCard 
+                        key={movie.id} 
+                        movie={movie} 
+                        onToggleSeen={handleToggleSeen}
+                    />
+                ))}
+                {filteredMovies.length === 0 && (
+                    <p className="no-movies">
+                        {showSeen 
+                            ? "No movies marked as seen yet :(" 
+                            : "No current movies to show"}
+                    </p>
+                )}
+            </div>
         </div>
     );
 }
