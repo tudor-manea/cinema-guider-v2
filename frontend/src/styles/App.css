@@ -8,8 +8,38 @@
   text-align: center;
   color: #ffffff;
   font-size: 3rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
+}
+
+.app-description {
+  text-align: center;
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.action-button {
+  min-width: 160px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.action-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }

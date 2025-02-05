@@ -1,6 +1,21 @@
-4. Add seen functionality
-- seen column for movies
-- toggle seen... movie service, movie controller
-- figure out how it will work with react
+- Add blurb below title (one sentence explanation of website)
+... component in frontend
 
-5. Deploy website
+- Add button for sort menu
+... shadcn?
+... api endpoints for different sorting
+... score, popularity, release date
+
+- Add button for seen movies tab
+... when toggled take to seen movies page?
+... make sorting available for that as well?
+
+
+- Current Unseen Header
+... component in frontend placed above movies list
+
+- Seen movies toggling
+... when toggled remove movie from unseen page
+... add movie to seen page
+
+- Deploy website
