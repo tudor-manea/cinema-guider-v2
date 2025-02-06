@@ -5,17 +5,28 @@ import '../styles/MovieList.css';
 
 interface MovieListProps {
     showSeen: boolean;
+    sortBy: string;
 }
 
-function MovieList({ showSeen }: MovieListProps) {
+function MovieList({ showSeen, sortBy }: MovieListProps) {
     const [movies, setMovies] = useState<Movie[]>([]);
 
     useEffect(() => {
         fetchMovies();
-    }, []);
+    }, [showSeen, sortBy]);
 
     const fetchMovies = () => {
-        fetch('http://localhost:8080/movies')
+        // If we are showing seen movies, hit the /movies/seen endpoint
+        let url = showSeen
+            ? 'http://localhost:8080/movies/seen'
+            : 'http://localhost:8080/movies';
+
+        // For "popular" sorting we add the query parameter; best is the default
+        if (sortBy === "popular") {
+            url += '?sort=popularity';
+        }
+
+        fetch(url)
             .then(response => response.json())
             .then(data => {
                 setMovies(Array.isArray(data) ? data : data.content);
@@ -29,7 +40,7 @@ function MovieList({ showSeen }: MovieListProps) {
         })
             .then(response => response.json())
             .then(updatedMovie => {
-                setMovies(movies.map(movie => 
+                setMovies(movies.map(movie =>
                     movie.id === id ? updatedMovie : movie
                 ));
             })
@@ -43,16 +54,16 @@ function MovieList({ showSeen }: MovieListProps) {
             <h2 className="view-title">{showSeen ? 'Seen Movies' : 'Current Movies'}</h2>
             <div className="movies">
                 {filteredMovies.map(movie => (
-                    <MovieCard 
-                        key={movie.id} 
-                        movie={movie} 
+                    <MovieCard
+                        key={movie.id}
+                        movie={movie}
                         onToggleSeen={handleToggleSeen}
                     />
                 ))}
                 {filteredMovies.length === 0 && (
                     <p className="no-movies">
-                        {showSeen 
-                            ? "No movies marked as seen yet :(" 
+                        {showSeen
+                            ? "No movies marked as seen yet :("
                             : "No current movies to show"}
                     </p>
                 )}
