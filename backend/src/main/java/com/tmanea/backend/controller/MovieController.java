@@ -31,11 +31,15 @@ public class MovieController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Movie>> getAllMovies(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
-        log.debug("getAllMovies({}, {})", page, size);
-        return ResponseEntity.ok(movieService.getAllMovies(PageRequest.of(page, size)));
+    public ResponseEntity<List<Movie>> getAllMovies(@RequestParam(required = false) String sort) {
+        List<Movie> movies;
+        if (sort != null && sort.equals("popularity")) {
+            movies = movieService.getAllMoviesByPopularity();
+        } else {
+            // Default sorting by vote average
+            movies = movieService.getAllMoviesByVoteAverage();
+        }
+        return ResponseEntity.ok(movies);
     }
 
     @PostMapping
@@ -113,15 +117,15 @@ public class MovieController {
         }
     }
 
-    @GetMapping("/best-rated")
-    public ResponseEntity<List<Movie>> getBestRatedMovies() {
-        log.debug("getBestRatedMovies()");
-        return ResponseEntity.ok(movieService.getBestRatedMovies());
-    }
-
-    @GetMapping("/most-popular")
-    public ResponseEntity<List<Movie>> getMostPopularMovies() {
-        log.debug("getMostPopularMovies()");
-        return ResponseEntity.ok(movieService.getMostPopularMovies());
+    @GetMapping("/seen")
+    public ResponseEntity<List<Movie>> getSeenMovies(@RequestParam(required = false) String sort) {
+        List<Movie> movies;
+        if (sort != null && sort.equals("popularity")) {
+            movies = movieService.getSeenMoviesByPopularity();
+        } else {
+            // Default sorting by vote average
+            movies = movieService.getSeenMoviesByVoteAverage();
+        }
+        return ResponseEntity.ok(movies);
     }
 }

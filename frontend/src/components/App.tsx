@@ -4,11 +4,10 @@ import { Button } from "@/components/ui/button"
 import { ListChecks, SlidersHorizontal } from "lucide-react"
 import { useState } from "react";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
 } from "@/components/ui/select"
 
 function App() {
@@ -26,9 +25,9 @@ function App() {
                 Discover and track the best movies currently showing in Dublin cinemas
             </p>
             <div className="button-container">
-                <Button 
-                    variant="outline" 
-                    size="lg" 
+                <Button
+                    variant="outline"
+                    size="lg"
                     className="action-button w-[160px]"
                     onClick={toggleView}
                 >
@@ -46,7 +45,7 @@ function App() {
                     </SelectContent>
                 </Select>
             </div>
-            <MovieList showSeen={showSeen} />
+            <MovieList showSeen={showSeen} sortBy={sortBy} />
         </div>
     );
 }
