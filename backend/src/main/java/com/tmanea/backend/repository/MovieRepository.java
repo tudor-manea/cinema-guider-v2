@@ -13,5 +13,6 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
 //    List<Movie> findByRatingGreaterThanEqual(Double rating);
     List<Movie> findTop10ByOrderByPopularityDesc();
     List<Movie> findAllByOrderByPopularityDesc();
-
+    List<Movie> findAllByOrderByVoteAverageDesc();
+    List<Movie> findAllByOrderByVoteCountDesc();
 }
