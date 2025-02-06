@@ -112,4 +112,16 @@ public class MovieController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/best-rated")
+    public ResponseEntity<List<Movie>> getBestRatedMovies() {
+        log.debug("getBestRatedMovies()");
+        return ResponseEntity.ok(movieService.getBestRatedMovies());
+    }
+
+    @GetMapping("/most-popular")
+    public ResponseEntity<List<Movie>> getMostPopularMovies() {
+        log.debug("getMostPopularMovies()");
+        return ResponseEntity.ok(movieService.getMostPopularMovies());
+    }
 }

@@ -79,4 +79,12 @@ public class MovieService {
         return movieRepository.findAllByOrderByPopularityDesc();
     }
 
+    public List<Movie> getBestRatedMovies() {
+        return movieRepository.findAllByOrderByVoteAverageDesc();
+    }
+
+    public List<Movie> getMostPopularMovies() {
+        return movieRepository.findAllByOrderByVoteCountDesc();
+    }
+
 }
