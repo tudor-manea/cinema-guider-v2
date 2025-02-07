@@ -1,10 +1,12 @@
 package com.tmanea.backend.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Entity;
+import lombok.Data;
 
 @Entity
 @Data
@@ -15,6 +17,8 @@ public class Movie {
     private String title;
     private String release_date;
     private float vote_average;
+    @Lob
+    @Column
     private String overview;
     private String poster_path;
     private float popularity;

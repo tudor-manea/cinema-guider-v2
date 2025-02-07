@@ -1,21 +1,14 @@
-- Add blurb below title (one sentence explanation of website)
-... component in frontend
+- for scrapping:
+... for letterboxd, if no rating found try the same search again with movietitle-releaseYear
+... need to properly scrape overview for movies from tmdb... look into movie scraping pipeline
 
-- Add button for sort menu
-... shadcn?
-... api endpoints for different sorting
-... score, popularity, release date
-
-- Add button for seen movies tab
-... when toggled take to seen movies page?
-... make sorting available for that as well?
+- improve movie cards:
+... make posters smaller on mobile
+... add overview of movie under title
+... make the rating look nicer
 
 
-- Current Unseen Header
-... component in frontend placed above movies list
+- add hyperlink to booking for each movie (just link the cinema booking page)
 
-- Seen movies toggling
-... when toggled remove movie from unseen page
-... add movie to seen page
 
 - Deploy website
