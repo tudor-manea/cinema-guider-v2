@@ -1,7 +1,3 @@
-- for scrapping:
-... for letterboxd, if no rating found try the same search again with movietitle-releaseYear
-... need to properly scrape overview for movies from tmdb... look into movie scraping pipeline
-
 - improve movie cards:
 ... make posters smaller on mobile
 ... add overview of movie under title

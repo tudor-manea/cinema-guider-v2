@@ -37,7 +37,7 @@ public class MovieMapper {
         movie.setOriginal_title(tmdbMovie.getOriginal_title());
 
         try {
-            LetterboxdMovieDto letterboxdMovie = letterboxdService.scrapeMovieRating(tmdbMovie.getTitle());
+            LetterboxdMovieDto letterboxdMovie = letterboxdService.tryUrls(tmdbMovie.getTitle(), tmdbMovie.getRelease_date());
             if (letterboxdMovie != null) {
                 movie.setVote_average(letterboxdMovie.getRating());
                 logger.info("Successfully mapped Letterbox rating {} for movie: {}",
