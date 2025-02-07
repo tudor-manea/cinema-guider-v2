@@ -4,4 +4,5 @@ export interface Movie {
     vote_average: number;
     poster_path: string;
     seen: boolean;
+    overview: string;
 }

@@ -31,6 +31,7 @@ public class MovieMapper {
         movie.setRelease_date(tmdbMovie.getRelease_date());
         movie.setPoster_path(tmdbMovie.getPoster_path());
         movie.setPopularity(tmdbMovie.getPopularity());
+        movie.setOverview(tmdbMovie.getOverview());
         movie.setVote_count(tmdbMovie.getVote_count());
         movie.setOriginal_language(tmdbMovie.getOriginal_language());
         movie.setOriginal_title(tmdbMovie.getOriginal_title());
