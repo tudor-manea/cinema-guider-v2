@@ -59,7 +59,7 @@ public class ActiveMovieService {
             boolean movieExists = ogMovieList.stream()
                     .anyMatch(existing -> existing.getTitle().equalsIgnoreCase(movie.getTitle()));
 
-            if (!movieExists) {
+            if (!movieExists && movie.getVote_average() != 0) {
                 repository.save(movie);
                 log.info("NEW MOVIE SAVED TO DB WITH TITLE {}", movie.getTitle());
             }
