@@ -1,0 +1,68 @@
+---
+- name: Deploy Cinema Guide Application
+  hosts: test.1ag.eu
+  become: yes
+  vars:
+    app_dir: /opt/cinema-guide
+    frontend_dir: "{{ app_dir }}/frontend"
+    backend_dir: "{{ app_dir }}/backend"
+
+  tasks:
+    - name: Ensure required directories exist
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - "{{ frontend_dir }}"
+        - "{{ backend_dir }}"
+
+    - name: Copy backend jar
+      copy:
+        src: backend/target/backend.jar
+        dest: "{{ backend_dir }}/backend.jar"
+        mode: '0644'
+      notify: restart backend
+
+    - name: Copy frontend files
+      copy:
+        src: frontend/dist/
+        dest: "{{ frontend_dir }}"
+        mode: '0644'
+
+    - name: Copy systemd service file
+      copy:
+        src: backend.service
+        dest: /etc/systemd/system/
+        mode: '0644'
+      notify: reload systemd
+
+    - name: Copy nginx configuration
+      copy:
+        src: cinema-guide.conf
+        dest: /etc/nginx/sites-available/
+        mode: '0644'
+      notify: reload nginx
+
+    - name: Enable nginx site
+      file:
+        src: /etc/nginx/sites-available/cinema-guide.conf
+        dest: /etc/nginx/sites-enabled/cinema-guide.conf
+        state: link
+      notify: reload nginx
+
+  handlers:
+    - name: reload systemd
+      systemd:
+        daemon_reload: yes
+
+    - name: restart backend
+      systemd:
+        name: backend
+        state: restarted
+        enabled: yes
+
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded
