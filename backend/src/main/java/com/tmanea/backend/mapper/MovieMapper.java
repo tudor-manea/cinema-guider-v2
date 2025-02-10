@@ -42,18 +42,14 @@ public class MovieMapper {
                 movie.setVote_average(letterboxdMovie.getRating());
                 logger.info("Successfully mapped Letterbox rating {} for movie: {}",
                         letterboxdMovie.getRating(), tmdbMovie.getTitle());
-            } else {
-                movie.setVote_average(tmdbMovie.getVote_average() / 2);
-                logger.warn("Using TMDB rating for movie: {} as Letterboxd rating was not available",
-                        tmdbMovie.getTitle());
+                return movie;
             }
+            logger.warn("No Letterboxd rating found for movie: {}, skipping", tmdbMovie.getTitle());
+            return null;
         } catch (IOException e) {
-            movie.setVote_average(tmdbMovie.getVote_average());
-            logger.error("Error getting Letterboxd rating for {}, using TMDB rating instead: {}",
-                    tmdbMovie.getTitle(), e.getMessage());
+            logger.error("Error getting Letterboxd rating for {}, skipping", tmdbMovie.getTitle());
+            return null;
         }
-
-        return movie;
     }
 
     public TmdbMovieDto scrapedToTmdbMovie(ScrapedMovieDto scrapedMovie) {
