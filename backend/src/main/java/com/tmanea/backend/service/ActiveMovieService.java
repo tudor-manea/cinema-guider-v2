@@ -53,15 +53,17 @@ public class ActiveMovieService {
         for (ScrapedMovieDto scrapedMovie : scrapedMoviesDtoList) {
             TmdbMovieDto tmdbMovie = mapper.scrapedToTmdbMovie(scrapedMovie);
             Movie movie = mapper.tmdbToMovie(tmdbMovie);
-            log.info("MOVIE SCRAPED WITH TITLE: {}", movie.getTitle());
-            scrapedMovies.add(movie);
+            if (movie != null) {
+                log.info("MOVIE SCRAPED WITH TITLE: {}", movie.getTitle());
+                scrapedMovies.add(movie);
 
-            boolean movieExists = ogMovieList.stream()
-                    .anyMatch(existing -> existing.getTitle().equalsIgnoreCase(movie.getTitle()));
+                boolean movieExists = ogMovieList.stream()
+                        .anyMatch(existing -> existing.getTitle().equalsIgnoreCase(movie.getTitle()));
 
-            if (!movieExists && movie.getVote_average() != 0) {
-                repository.save(movie);
-                log.info("NEW MOVIE SAVED TO DB WITH TITLE {}", movie.getTitle());
+                if (!movieExists && movie.getVote_average() != 0) {
+                    repository.save(movie);
+                    log.info("NEW MOVIE SAVED TO DB WITH TITLE {}", movie.getTitle());
+                }
             }
         }
 
