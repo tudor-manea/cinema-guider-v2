@@ -56,20 +56,30 @@ public class MovieScraperService {
                     .timeout(10000)
                     .get();
 
-            Elements movieElements = doc.select(".movie-header");
-            logger.debug("Found {} movie elements on page", movieElements.size());
+            // Select all movie blocks instead of just movie headers
+            Elements movieBlocks = doc.select(".movie-times-block");
+            logger.debug("Found {} movie blocks on page", movieBlocks.size());
 
-            for (Element movie : movieElements) {
-                Elements titleElement = movie.select("a > h3");
-                String title = titleElement.text().trim();
+            for (Element movieBlock : movieBlocks) {
+                // Look for the title in the block-content section
+                Element titleElement = movieBlock.select(".block-content h3").first();
 
-                if (!title.isEmpty()) {
-                    ScrapedMovieDto movieDto = new ScrapedMovieDto();
-                    movieDto.setTitle(title);
-                    // You might want to get the URL too
-                    movieDto.setUrl(movie.select("a").attr("href"));
-                    scrapedMovies.add(movieDto);
-                    logger.debug("Scraped movie: {}", title);
+                if (titleElement != null) {
+                    String title = titleElement.ownText().trim(); // Using ownText() to avoid getting rating text
+
+                    if (!title.isEmpty()) {
+                        ScrapedMovieDto movieDto = new ScrapedMovieDto();
+                        movieDto.setTitle(title);
+
+                        // Get the URL if there's a link
+                        Element linkElement = movieBlock.select(".block-content a").first();
+                        if (linkElement != null) {
+                            movieDto.setUrl(linkElement.attr("href"));
+                        }
+
+                        scrapedMovies.add(movieDto);
+                        logger.debug("Scraped movie: {}", title);
+                    }
                 }
             }
 
