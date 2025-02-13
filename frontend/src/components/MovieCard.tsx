@@ -36,7 +36,14 @@ const MovieCard = ({ movie, onToggleSeen }: MovieCardProps) => {
                 <div className="flex-1 flex flex-col">
                     {/* Title and Rating */}
                     <div className="flex justify-between items-start gap-2 mb-3 md:mb-4">
-                        <h2 className="text-2xl md:text-3xl font-semibold text-white flex-1">{movie.title}</h2>
+                        <a 
+    href="https://www.odeoncinemas.ie/cinemas/point-square/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-2xl md:text-3xl font-semibold text-white flex-1 hover:text-blue-400 transition-colors cursor-pointer"
+>
+    {movie.title}
+</a>
                         <div className="flex items-center gap-1 md:gap-2 bg-black/50 rounded-xl px-2 md:px-3 py-1 md:py-2 flex-shrink-0">
                             <Star className="w-5 h-5 md:w-6 md:h-6 text-yellow-400 fill-yellow-400" />
                             <span className="text-lg md:text-xl font-bold text-white">
