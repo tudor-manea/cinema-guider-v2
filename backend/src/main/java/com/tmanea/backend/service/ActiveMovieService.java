@@ -31,7 +31,7 @@ public class ActiveMovieService {
         this.mapper = mapper;
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 */10 * * * *")
     public void scheduledActiveMovieSync() {
         try {
             log.info("Starting scheduled active movie sync at midnight");
@@ -52,18 +52,22 @@ public class ActiveMovieService {
 
         for (ScrapedMovieDto scrapedMovie : scrapedMoviesDtoList) {
             TmdbMovieDto tmdbMovie = mapper.scrapedToTmdbMovie(scrapedMovie);
-            Movie movie = mapper.tmdbToMovie(tmdbMovie);
-            if (movie != null) {
-                log.info("MOVIE SCRAPED WITH TITLE: {}", movie.getTitle());
-                scrapedMovies.add(movie);
+            if (tmdbMovie != null) { // Add null check here
+                Movie movie = mapper.tmdbToMovie(tmdbMovie);
+                if (movie != null) {
+                    log.info("MOVIE SCRAPED WITH TITLE: {}", movie.getTitle());
+                    scrapedMovies.add(movie);
 
-                boolean movieExists = ogMovieList.stream()
-                        .anyMatch(existing -> existing.getTitle().equalsIgnoreCase(movie.getTitle()));
+                    boolean movieExists = ogMovieList.stream()
+                            .anyMatch(existing -> existing.getTitle().equalsIgnoreCase(movie.getTitle()));
 
-                if (!movieExists && movie.getVote_average() != 0) {
-                    repository.save(movie);
-                    log.info("NEW MOVIE SAVED TO DB WITH TITLE {}", movie.getTitle());
+                    if (!movieExists && movie.getVote_average() != 0) {
+                        repository.save(movie);
+                        log.info("NEW MOVIE SAVED TO DB WITH TITLE {}", movie.getTitle());
+                    }
                 }
+            } else {
+                log.warn("Could not find TMDB data for scraped movie: {}", scrapedMovie.getTitle());
             }
         }
 

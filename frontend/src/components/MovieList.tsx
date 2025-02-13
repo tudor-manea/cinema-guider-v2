@@ -3,6 +3,8 @@ import { Movie } from '../types/movie';
 import MovieCard from './MovieCard';
 import '../styles/MovieList.css';
 
+const baseUrl = "https://test.1ag.eu/api";
+
 interface MovieListProps {
     showSeen: boolean;
     sortBy: string;
@@ -15,11 +17,13 @@ function MovieList({ showSeen, sortBy }: MovieListProps) {
         fetchMovies();
     }, [showSeen, sortBy]);
 
+    // TODO: Make paths relative
+
     const fetchMovies = () => {
         // If we are showing seen movies, hit the /movies/seen endpoint
         let url = showSeen
-            ? 'http://localhost:8080/movies/seen'
-            : 'http://localhost:8080/movies';
+            ? baseUrl + '/movies/seen'
+            : baseUrl + '/movies'
 
         // For "popular" sorting we add the query parameter; best is the default
         if (sortBy === "popular") {
@@ -35,7 +39,7 @@ function MovieList({ showSeen, sortBy }: MovieListProps) {
     };
 
     const handleToggleSeen = (id: string) => {
-        fetch(`http://localhost:8080/movies/${id}/seen`, {
+        fetch(baseUrl + `/movies/${id}/seen`, {
             method: 'PUT',
         })
             .then(response => response.json())
