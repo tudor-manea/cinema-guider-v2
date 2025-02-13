@@ -25,7 +25,7 @@ function App() {
             <div className="app-container relative z-10">
                 <h1 className="app-title">Cinema Guider</h1>
                 <p className="app-description">
-                    Discover and track the best movies currently showing in Dublin cinemas
+                    Tracking the best movies in Odeon Point Square
                 </p>
                 <div className="button-container">
                     <Button
