@@ -4,6 +4,7 @@ import com.tmanea.backend.domain.Movie;
 import com.tmanea.backend.dto.LetterboxdMovieDto;
 import com.tmanea.backend.dto.ScrapedMovieDto;
 import com.tmanea.backend.dto.TmdbMovieDto;
+import com.tmanea.backend.dto.TmdbMoviePageDto;
 import com.tmanea.backend.service.LetterboxdScraperService;
 import com.tmanea.backend.service.TmdbMovieService;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class MovieMapper {
     public Movie tmdbToMovie(TmdbMovieDto tmdbMovie) {
         Movie movie = new Movie();
         movie.setTitle(tmdbMovie.getTitle());
-//        movie.setVote_average(tmdbMovie.getVote_average());
+        // movie.setVote_average(tmdbMovie.getVote_average());
         movie.setRelease_date(tmdbMovie.getRelease_date());
         movie.setPoster_path(tmdbMovie.getPoster_path());
         movie.setPopularity(tmdbMovie.getPopularity());
@@ -37,7 +38,8 @@ public class MovieMapper {
         movie.setOriginal_title(tmdbMovie.getOriginal_title());
 
         try {
-            LetterboxdMovieDto letterboxdMovie = letterboxdService.tryUrls(tmdbMovie.getTitle(), tmdbMovie.getRelease_date());
+            LetterboxdMovieDto letterboxdMovie = letterboxdService.tryUrls(tmdbMovie.getTitle(),
+                    tmdbMovie.getRelease_date());
             if (letterboxdMovie != null) {
                 movie.setVote_average(letterboxdMovie.getRating());
                 logger.info("Successfully mapped Letterbox rating {} for movie: {}",
@@ -53,6 +55,11 @@ public class MovieMapper {
     }
 
     public TmdbMovieDto scrapedToTmdbMovie(ScrapedMovieDto scrapedMovie) {
-        return tmdbService.searchMovies(scrapedMovie.getTitle()).getResults().getFirst();
+        TmdbMoviePageDto searchResults = tmdbService.searchMovies(scrapedMovie.getTitle());
+        if (searchResults == null || searchResults.getResults() == null || searchResults.getResults().isEmpty()) {
+            logger.warn("No TMDB results found for movie: {}", scrapedMovie.getTitle());
+            return null;
+        }
+        return searchResults.getResults().get(0);
     }
 }
